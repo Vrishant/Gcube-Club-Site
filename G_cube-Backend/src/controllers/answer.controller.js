@@ -13,6 +13,15 @@ const registerAnswer=asyncHandler(async(req,res)=>{
     if(!user){
         throw new ApiError(400,"User is required");
     }
+/*    const userDoc= await User.findById(user);
+    if(!userDoc || !userDoc.srn){
+        throw new ApiError(400,"User or SRN was not found");
+    }
+    const srn= userDoc.srn;
+    const exsistingEntry= await User.countDocuments({srn:srn});
+    if(exsistingEntry>2){
+       throw new ApiError(408,"Limit of 2 entries exceeded"); 
+    }   */
     const answerDoc=await Answer.create({answer,user,question});
     const fetchedAnswer= await Answer.findById(answerDoc._id);
     if(!fetchedAnswer){
