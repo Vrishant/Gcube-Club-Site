@@ -38,6 +38,7 @@ const Register = () => {
       srn,
       semester,
       domain,
+      
     };
 
     const response = await fetch('https://gcube-club-site.onrender.com/api/v1/auth/register', {
