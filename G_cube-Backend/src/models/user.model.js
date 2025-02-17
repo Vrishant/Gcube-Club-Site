@@ -42,6 +42,11 @@ const userSchema = new Schema({
         type:Number,
         required:true,
         unique:true
+    },
+    domain:{
+        type:String,
+        required:true,
+        trim:true
     }
 },{
     timestamps:true

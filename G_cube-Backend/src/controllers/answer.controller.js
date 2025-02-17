@@ -5,12 +5,22 @@ import { User } from '../models/user.model.js';
 import { Answer } from '../models/answer.model.js';
 
 const registerAnswer=asyncHandler(async(req,res)=>{
-    const {answer,question}=req.body;
-    if(!answer|| !question){
-        throw new ApiError(400,"Answer or question was not provided");
+    console.log('Request Body:', req.body);
+    // Trim field names to handle potential spaces
+    const trimmedBody = Object.fromEntries(
+        Object.entries(req.body).map(([key, value]) => [key.trim(), value])
+    );
+    
+    const {answer, question} = trimmedBody;
+    if(!answer || !question) {
+        console.log('Missing fields:', {answer, question});
+        throw new ApiError(400, "Answer or question was not provided");
     }
-    const user=req.user?._id;
-    if(!user){
+    const userId=req.user?._id;
+    const name=req.user?.username;
+    const userSRN=req.user?.srn;
+    const userDomain=req.user?.domain;
+    if(!userId){
         throw new ApiError(400,"User is required");
     }
 /*    const userDoc= await User.findById(user);
@@ -22,13 +32,13 @@ const registerAnswer=asyncHandler(async(req,res)=>{
     if(exsistingEntry>2){
        throw new ApiError(408,"Limit of 2 entries exceeded"); 
     }   */
-    const answerDoc=await Answer.create({answer,user,question});
+    const answerDoc=await Answer.create({userId,question,answer,name,userSRN,userDomain});
     const fetchedAnswer= await Answer.findById(answerDoc._id);
     if(!fetchedAnswer){
         throw new ApiError(504,"Error in registering answer");
     }
     await User.findByIdAndUpdate(
-        user,
+        userId,
         {$push:{answer:answerDoc._id}},
         {new:true}
     )

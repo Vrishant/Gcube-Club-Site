@@ -5,8 +5,8 @@ import {User} from '../models/user.model.js';
 import mongoose from 'mongoose';
 
 const registerUser= asyncHandler(async(req,res)=>{
-    const {username,srn,branch,semester,contactNo,email}=req.body;
-    if([username,srn,branch,semester,contactNo,email].some((field)=>field?.trim()==="")){
+    const {username,srn,branch,semester,contactNo,email,domain}=req.body;
+    if([username,srn,branch,semester,contactNo,email,domain].some((field)=>field?.trim()==="")){
         return new ApiError(400,"Please fill all the fields");
     }
  /*   //comment below code if u don't want same person to send multiple requests
@@ -27,6 +27,8 @@ const registerUser= asyncHandler(async(req,res)=>{
         branch,
         semester,
         contactNo,
+        email,
+        domain
     })
     const createdUser= await User.findById(someUser._id);
     if(!createdUser){
