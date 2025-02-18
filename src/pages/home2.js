@@ -5,7 +5,7 @@ import textImage from '../assets/img2.jpeg';
 import backgroundImage from '../assets/3.jpeg';
 import FAQs from '../components/FAQ';
 import Carousel from '../components/carousel';
-import logo2Image from '../assets/logo.jpeg'; // Import the new logo
+import logo2Image from '../assets/Logo.jpeg'; // Import the new logo
 import './home2media.css';
 
 const Home2 = () => {
