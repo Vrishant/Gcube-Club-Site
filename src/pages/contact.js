@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import NavigationBar from '../components/navbar';
+import backgroundImage from '../assets/3_back.jpeg';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -19,9 +20,8 @@ const Contact = () => {
       },
       body: JSON.stringify({ name, email, message }),
     });
-    
-    if (response.ok) {
 
+    if (response.ok) {
       // Reset form fields
       setName('');
       setEmail('');
@@ -35,46 +35,69 @@ const Contact = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#1a1d23' }}>
+    <div style={{ minHeight: '100vh', backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
       <div style={{ position: 'sticky', top: 0, zIndex: 100 }}>
         <NavigationBar username="JohnDoe" />
       </div>
       <Container fluid className="py-5">
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
-            <h1
-              className="display-4"
+            <h2
               style={{
-                fontFamily: 'Oswald',
-                color: 'rgb(44, 211, 211)',
+                fontFamily: 'Zen Dots',
+                fontSize: '4vw',
                 fontWeight: 'bolder',
-                fontSize: '4rem',
-                textShadow: '0 0 10px black',
+                color: 'rgb(44, 211, 211)',
+                textShadow: '0 0 15px rgb(0, 106, 163), 0 0 25px rgba(10, 102, 188, 0.8), 0 0 35px rgb(7, 135, 135)',
+                textAlign: 'center',
+                marginBottom: '5vh',
+                '@media (max-width: 767px)': {
+                  fontSize: '3vw',
+                },
+                '@media (min-width: 768px) and (max-width: 1199px)': {
+                  fontSize: '3.5vw',
+                },
               }}
             >
               Contact Us
-            </h1>
-            <p className="lead text-white">
-              Have a question or want to collaborate? We'd love to hear from you!
-            </p>
+            </h2>
+            
+            
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col md={8}>
-            <p className="text-white">
-              If you're interested in learning more about our projects, or if you'd like to
+          <Col md={8} className="text-center">
+          <p
+              style={{
+                fontFamily: 'Poppins',
+                fontSize: '1.4vw',
+                fontWeight: '300',
+                color: 'whitesmoke',
+                padding: '0 5vw',
+                '@media (max-width: 767px)': {
+                  fontSize: '1vw',
+                },
+                '@media (min-width: 768px) and (max-width: 1199px)': {
+                  fontSize: '1.2vw',
+                },
+              }}
+            >
+              Have a question or want to collaborate? We'd love to hear from you!
+
+             If you're interested in learning more about our projects, or if you'd like to
               collaborate with us, please don't hesitate to reach out. We're always looking
               for like-minded individuals to join our community.
-            </p>
-            <p className="text-white">
               You can contact us through the form below, or by sending an email to{' '}
-              <a href="mailto:gcube@pes.edu" className="blue1">
+              <a href="mailto:gcube@pes.edu" className="glow-text">
                 gcube@pes.edu
               </a>
               .
             </p>
+            
           </Col>
         </Row>
+          
+        
         <Row className="justify-content-center mt-5">
           <Col md={8}>
             <Card
@@ -93,7 +116,8 @@ const Contact = () => {
                   <>
                     <Card.Title
                       style={{
-                        color: 'rgb(189, 38, 111)',
+                        color: 'rgb(255, 0, 0)', // Neon Red
+                        textShadow: '0 0 15px rgb(255, 0, 0), 0 0 25px rgba(255, 0, 0, 0.8), 0 0 35px rgb(255, 0, 0)',
                         fontSize: '1.5rem',
                         fontFamily: 'Oswald',
                         fontWeight: 'Bold',
@@ -101,9 +125,7 @@ const Contact = () => {
                     >
                       Get in Touch
                     </Card.Title>
-                    <form 
-                    onSubmit={handleSubmit}
-                    >
+                    <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <label className="form-label text-white">Name:</label>
                         <input
@@ -140,7 +162,7 @@ const Contact = () => {
                       <Button
                         variant="outline-secondary"
                         style={{
-                          backgroundColor: 'rgb(123, 16, 68)',
+                          backgroundColor: 'rgba(255, 0, 0, 0.8)', // Neon Red
                           color: 'whitesmoke',
                           padding: '10px 20px',
                           borderRadius: '5px',
@@ -148,7 +170,11 @@ const Contact = () => {
                           cursor: 'pointer',
                           fontFamily: 'Oswald',
                           fontSize: '1rem',
+                          boxShadow: '0 4px 10px rgba(255, 0, 0, 0.85)', // Neon Red shadow
+                          transition: 'box-shadow 0.3s ease-in-out',
                         }}
+                        onMouseEnter={(e) => (e.target.style.boxShadow = '0 6px 15px rgba(255, 0, 0, 0.8)')}
+                        onMouseLeave={(e) => (e.target.style.boxShadow = '0 4px 10px rgba(255, 0, 0, 0.6)')}
                         className="icon2"
                         type="submit"
                         disabled={isSubmitting}
