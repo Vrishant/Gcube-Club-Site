@@ -5,7 +5,7 @@ import { upload } from "./middlewares/multer.middleware.js"; // Importing the mu
 
 const app = express();
 const corsOption={
-    origin: ['https://gcube-pes.vercel.app', 'http://localhost:3000'],
+    origin: process.env.CORS_ORIGIN,//['https://gcube-pes.vercel.app', 'http://localhost:3000'],
     methods:'GET,PUT,POST,DELETE',
     allowedHeaders:'Content-Type,Authorization',
     credentials: true,
@@ -13,6 +13,13 @@ const corsOption={
 }
 app.use(cors(corsOption));
 app.options('*',cors(corsOption));
+app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] !== "https") {
+        return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+});
+
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));

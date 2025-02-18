@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 const registerUser= asyncHandler(async(req,res)=>{
     const {username,srn,branch,semester,contactNo,email,domain}=req.body;
     if([username,srn,branch,semester,contactNo,email,domain].some((field)=>field?.trim()==="")){
-        return new ApiError(400,"Please fill all the fields");
+        throw new ApiError(400,"Please fill all the fields");
     }
  /*   //comment below code if u don't want same person to send multiple requests
     const exsistingUser= await User.findOne({
@@ -19,7 +19,7 @@ const registerUser= asyncHandler(async(req,res)=>{
     //only remove till here     */
     const exsistingEntry= await User.countDocuments({srn:srn}); //this check is added to verify that same SRN has not applied for more than 2 domains.
     if(exsistingEntry>2){
-        return new ApiError(400,"No more than 2 entries allowed for the same SRN");
+        throw new ApiError(400,"No more than 2 entries allowed for the same SRN");
     }
     const someUser= await User.create({
         username,
@@ -32,7 +32,7 @@ const registerUser= asyncHandler(async(req,res)=>{
     })
     const createdUser= await User.findById(someUser._id);
     if(!createdUser){
-        return new ApiError(504,"Some error occured in user registration");
+        throw new ApiError(504,"Some error occured in user registration");
     }
     return res.status(201)
     .json(new ApiResponse(201,createdUser,"Successful user registration"));
@@ -41,11 +41,11 @@ const registerUser= asyncHandler(async(req,res)=>{
 const getUser= asyncHandler(async(req,res)=>{
     const userId=req.user?._id;
     if(!userId){
-        return new ApiError(401,"User not authenticated");
+        throw new ApiError(401,"User not authenticated");
     }
     const user= await User.findById(userId).select("-answer");      //add or remove fields u want to give to user
     if(!user){
-        return new ApiError(404,"User not found");
+        throw new ApiError(404,"User not found");
     }
     return res.status(202)
     .json(new ApiResponse(202,user,"User has been fetched."));
@@ -54,7 +54,7 @@ const getUser= asyncHandler(async(req,res)=>{
 const userAnswers= asyncHandler(async(req,res)=>{
     const userId=req.user?._id;
     if(!userId){
-        return new ApiError(401,"User not provided");
+        throw new ApiError(401,"User not provided");
     }
     const answer= await User.aggregate([
         {
