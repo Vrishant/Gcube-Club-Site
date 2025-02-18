@@ -77,18 +77,16 @@ const Register = () => {
   //     throw error;
   //   }
   // };
-  const handleAnswerRegistration = async (answers, userId) => {
+  const handleAnswerRegistration = async (answers) => {
     try {
-        if (!userId) {
-            throw new Error("User ID is missing. Answer registration failed.");
-        }
-
-        console.log("Submitting Answers with User ID:", userId); // Debugging log
+        console.log("Submitting Answers:", answers); // Debugging Log
 
         const form = new FormData();
         Object.entries(answers).forEach(([key, value]) => {
             form.append(key, value);
         });
+
+        console.log("User ID:", userId); // Check if userId exists
 
         const response = await fetch(`http://localhost:4000/api/v1/answer/register?userId=${userId}`, {
             method: "POST",
@@ -96,7 +94,7 @@ const Register = () => {
         });
 
         const responseData = await response.json();
-        console.log("Answer Registration Response:", responseData);
+        console.log("Answer Registration Response:", responseData); // Debug API response
 
         if (!response.ok) throw new Error(responseData.message || "Answer registration failed");
 
@@ -107,14 +105,13 @@ const Register = () => {
     }
 };
 
-
   
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-
-  const formData = {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = {
       username: name,
       email,
       contactNo: Number(contact),
@@ -122,40 +119,38 @@ const handleSubmit = async (e) => {
       srn: srn.toLowerCase().trim(),
       semester: Number(semester),
       domain
-  };
+    };
 
-  try {
-      // Step 1: Register User
+    try {
+      // Step 1: Register user
       const userResponse = await handleUserRegistration(formData);
-      console.log("Registered User Response:", userResponse);
       
-      // Store userId in state
-      setUserId(userResponse.data._id);
-      console.log("User ID Set in State:", userResponse.data._id); // Debugging Log
-
-      // Wait for state update before proceeding
-      await new Promise((resolve) => setTimeout(resolve, 100));
-
-      // Step 2: Collect Answers
+      // Step 2: Collect answers
       const answers = questions.reduce((acc, question, index) => {
-          acc[`question${index + 1}`] = question;
-          acc[`answer${index + 1}`] = e.target.elements[`answer${index}`].value;
-          return acc;
+        acc[`question${index + 1}`] = question;
+        acc[`answer${index + 1}`] = e.target.elements[`answer${index}`].value;
+        return acc;
       }, {});
 
-      // Step 3: Register Answers
-      console.log("Submitting Answers with User ID:", userId);
-      await handleAnswerRegistration(answers, userResponse.data._id);
+      // Step 3: Register answers
+      await handleAnswerRegistration(answers);
       
+      // Clear form and show success
+      setName('');
+      setEmail('');
+      setContact('');
+      setBranch('');
+      setSrn('');
+      setSemester('');
+      setDomain('');
       setShowConfirmation(true);
       setTimeout(() => setShowConfirmation(false), 3000);
-  } catch (error) {
-      alert(error.message || "An error occurred during registration");
-  } finally {
+    } catch (error) {
+      alert(error.message || 'An error occurred during registration');
+    } finally {
       setIsSubmitting(false);
-  }
-};
-
+    }
+  };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#1a1d23' }}>
