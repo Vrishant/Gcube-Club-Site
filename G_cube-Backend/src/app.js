@@ -4,10 +4,14 @@ import cookieParser from "cookie-parser";
 import { upload } from "./middlewares/multer.middleware.js"; // Importing the multer middleware
 
 const app = express();
-app.use(cors({
+const corsOption={
     origin: process.env.CORS_ORIGIN,
+    methods:'GET,UPDATE,POST,DELETE',
+    allowedHeaders:'Content-Type,Authorization',
     credentials: true
-}));
+}
+app.use(cors(corsOption));
+app.options('*',cors(corsOption));
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
