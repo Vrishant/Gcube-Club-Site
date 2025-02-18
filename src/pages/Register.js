@@ -35,7 +35,7 @@ const Register = () => {
         form.append(key, value);
       });
   
-      const response = await fetch("http://localhost:4000/api/v1/user/register", {
+      const response = await fetch("http://gcube-club-site.onrender.com/api/v1/user/register", {
         method: "POST",
         body: form,
       });
@@ -90,7 +90,7 @@ const Register = () => {
             form.append(key, value);
         });
 
-        const response = await fetch(`http://localhost:4000/api/v1/answer/register?userId=${userId}`, {
+        const response = await fetch(`http://gcube-club-site.onrender.com/api/v1/answer/register?userId=${userId}`, {
             method: "POST",
             body: form,
         });
