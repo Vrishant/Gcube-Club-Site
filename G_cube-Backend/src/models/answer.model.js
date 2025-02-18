@@ -6,15 +6,45 @@ const answerSchema= new Schema({
         ref:"User",
         required:true
     },
-    answer:{
+    question1:{
+        type:String,
+        required:true,
+        trim:true,
+        index:true  
+    },
+    answer1:{
         type:String,
         required:true,
         trim:true,
         index:true
     },
-    question:{
+    question2:{
         type:String,
-        required:true,
+        trim:true,
+        index:true
+    },
+    answer2:{
+        type:String,
+        trim:true,
+        index:true
+    },
+    question3:{
+        type:String,
+        trim:true,
+        index:true
+    },
+    answer3:{
+        type:String,
+        trim:true,
+        index:true
+    },
+    question4:{
+        type:String,
+        trim:true,
+        index:true
+    },
+    answer4:{
+        type:String,
         trim:true,
         index:true
     },

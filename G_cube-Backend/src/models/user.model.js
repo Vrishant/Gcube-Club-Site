@@ -22,12 +22,16 @@ const userSchema = new Schema({
         trim:true,
         lowercase:true
     },
-    answer:[
+    /*answer:[
         {
             type:Schema.Types.ObjectId,
             ref:"Answer"
         }
-    ],
+    ],*/
+    answer:{
+        type:Schema.Types.ObjectId,
+        ref:'Answer'
+    },
     branch:{
         type:String,
         required:true,
