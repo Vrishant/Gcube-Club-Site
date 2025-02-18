@@ -199,14 +199,16 @@ const Home2 = () => {
                         <Button
                           variant="outline-secondary"
                           style={{
-                            backgroundColor: 'rgb(123, 16, 68)',
-                            color: 'whitesmoke',
-                            padding: '10px 20px',
-                            borderRadius: '5px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontFamily: 'Oswald',
-                            fontSize: '1rem',
+                            backgroundColor: 'rgba(255, 0, 0, 0.8)', // Neon Red
+                          color: 'whitesmoke',
+                          padding: '10px 20px',
+                          borderRadius: '5px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontFamily: 'Oswald',
+                          fontSize: '1rem',
+                          boxShadow: '0 4px 10px rgba(255, 0, 0, 0.85)', // Neon Red shadow
+                          transition: 'box-shadow 0.3s ease-in-out',
                           }}
                           className='icon2'
                         >

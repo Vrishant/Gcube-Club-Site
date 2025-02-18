@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import { Linkedin, Instagram } from 'react-bootstrap-icons';
@@ -5,37 +6,62 @@ import NavigationBar from '../components/navbar';
 import dhruv from '../assets/DHRUV.jpeg';
 import vajra from '../assets/VAJRA.jpeg';
 import './about.css';
+import backgroundImage2 from '../assets/3_back.jpeg';
 
 const About = () => {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#1a1d23' }}>
+    <div style={{ minHeight: '100vh',  backgroundImage: `url(${backgroundImage2})`,backgroundAttachment:'fixed',backgroundSize:'cover' }}>
       <div style={{ position: 'sticky', top: 0, zIndex: 100 }}>
         <NavigationBar username="JohnDoe" />
       </div>
       <Container fluid className="py-5">
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
-            <h1 className="display-4"
+          <h2
               style={{
-                fontFamily: 'Oswald',
-                color: 'rgb(44, 211, 211)',
+                fontFamily: 'Zen Dots',
+                fontSize: '4vw',
                 fontWeight: 'bolder',
-                fontSize: '4rem',
-                textShadow: '0 0 10px black',
-                marginBottom: '2rem'
-              }}>
-              <div>Welcome to <em1>GCUBE</em1></div>
-              <div style={{ fontSize: '3rem' }}>The Game Development Club of PES</div>
-            </h1>
+                color: 'rgb(44, 211, 211)',
+                textShadow: '0 0 15px rgb(0, 106, 163), 0 0 25px rgba(10, 102, 188, 0.8), 0 0 35px rgb(7, 135, 135)',
+                textAlign: 'center', // Center the text
+                marginBottom: '5vh',
+                '@media (max-width: 767px)': {
+                  fontSize: '3vw',
+                },
+                '@media (min-width: 768px) and (max-width: 1199px)': {
+                  fontSize: '3.5vw',
+                },
+              }}
+            >
+              About Us
+            </h2>
+            
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col md={8}>
-            <p className='text-white'>
-              At <em1>G³</em1>, we believe in the power of collaboration and creativity to shape the future of game development. 
+          <p
+              style={{
+                fontFamily: 'Poppins',
+                fontSize: '1.4vw',
+                fontWeight: '300',
+                color: 'whitesmoke',
+                padding: '0 5vw',
+                '@media (max-width: 767px)': {
+                  fontSize: '1vw',
+                },
+                '@media (min-width: 768px) and (max-width: 1199px)': {
+                  fontSize: '1.2vw',
+                },
+              }}
+            >
+              At GCUBE, we believe in the power of collaboration and creativity to shape the future of game development. 
               Our mission is to unite passionate developers, designers, and artists in a supportive community where they can hone their skills, 
               share ideas, and build innovative games together.
             </p>
+
+            
           </Col>
         </Row>
         <Row className="justify-content-center mt-5">
@@ -51,7 +77,8 @@ const About = () => {
                     </Col>
                     <Col md={8}>
                       <Card.Body>
-                        <Card.Title style={{ color: 'rgb(189, 38, 111)', fontSize: '1.5rem' }}>Dhruv Jain</Card.Title>
+                        <Card.Title style={{ color: 'rgb(255, 0, 0)', // Neon Red
+                        textShadow: '0 0 15px rgb(255, 0, 0), 0 0 25px rgba(255, 0, 0, 0.8), 0 0 35px rgb(255, 0, 0)', fontSize: '1.5rem' }}>Dhruv Jain</Card.Title>
                         <Card.Text className="text-white">
                           Game Developer with expertise in Unreal Engine, Blender and C++. Passionate about creating immersive gameplay experiences.
                         </Card.Text>
@@ -75,7 +102,8 @@ const About = () => {
                     </Col>
                     <Col md={8}>
                       <Card.Body>
-                        <Card.Title style={{ color: 'rgb(189, 38, 111)', fontSize: '1.5rem', fontWeight: 'bold' }}>Vajra Dindakurthi</Card.Title>
+                        <Card.Title style={{ color: 'rgb(255, 0, 0)', // Neon Red
+                        textShadow: '0 0 15px rgb(255, 0, 0), 0 0 25px rgba(255, 0, 0, 0.8), 0 0 35px rgb(255, 0, 0)', fontSize: '1.5rem', fontWeight: 'bold' }}>Vajra Dindakurthi</Card.Title>
                         <Card.Text className="text-white">
                             Programmer with a passion for Mathematical Designs in games . Enjoys solving complex puzzles
                         </Card.Text>
@@ -101,7 +129,7 @@ const About = () => {
             <Card className="future-prospect-card" style={{ backgroundColor: '#2a2e35', border: 'none', padding: '20px' }}>
               <Card.Body>
                 <Card.Text className="text-white" style={{ fontSize: '1.2rem', lineHeight: '1.8', fontWeight: 'bold' }}>
-                  <em1>G³</em1> envisions a future where we take bold steps toward self-publishing our games, showcasing the creativity and skill of our members. 
+                  GCUBE envisions a future where we take bold steps toward self-publishing our games, showcasing the creativity and skill of our members. 
                   While we remain open to partnerships with publishers, our primary goal is to highlight our work independently and establish a unique 
                   voice in the industry. We aspire to represent our college at leading national and international events, sharing our passion, innovation, 
                   and talent with the broader gaming community and beyond.

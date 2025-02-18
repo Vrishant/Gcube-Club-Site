@@ -129,7 +129,17 @@ const Register = () => {
       <Container fluid className="py-5">
         <Row className="justify-content-center">
           <Col md={6} className="text-center">
-            <h1 className="display-4" style={{ fontFamily: 'Oswald', color: 'rgb(44, 211, 211)', fontWeight: 'bolder', fontSize: '4rem', textShadow: '0 0 10px black' }}>Register</h1>
+            <h1 className="display-4" style={{
+                fontFamily: 'Zen Dots',
+                fontSize: '4vw',
+                fontWeight: 'bolder',
+                color: 'rgb(44, 211, 211)',
+                textShadow: '0 0 15px rgb(0, 106, 163), 0 0 25px rgba(10, 102, 188, 0.8), 0 0 35px rgb(7, 135, 135)',
+                textAlign: 'center', // Center the text
+                marginBottom: '5vh',
+                
+                
+               }}>Register</h1>
             <p className="lead text-white">Join us today and become a part of our community!</p>
           </Col>
         </Row>
@@ -190,7 +200,22 @@ const Register = () => {
                           />
                         </div>
                       ))}
-                      <Button variant="outline-secondary" style={{ backgroundColor: 'rgb(123, 16, 68)', color: 'whitesmoke', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer', fontFamily: 'Oswald', fontSize: '1rem' }} className="icon2" type="submit" disabled={isSubmitting}>
+                      {uploadRequired && (
+                        <div className="mb-3">
+                          <label className="form-label text-white">{documentLabel}</label>
+                          <input type="file" className="form-control" onChange={(e) => setDocument(e.target.files[0])} required />
+                        </div>
+                      )}
+                      <Button variant="outline-secondary" style={{  backgroundColor: 'rgba(255, 0, 0, 0.8)', // Neon Red
+                          color: 'whitesmoke',
+                          padding: '10px 20px',
+                          borderRadius: '5px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontFamily: 'Oswald',
+                          fontSize: '1rem',
+                          boxShadow: '0 4px 10px rgba(255, 0, 0, 0.85)', // Neon Red shadow
+                          transition: 'box-shadow 0.3s ease-in-out', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer', fontFamily: 'Oswald', fontSize: '1rem' }} className="icon2" type="submit" disabled={isSubmitting}>
                         {isSubmitting ? 'Registering...' : 'Register'}
                       </Button>
                     </form>
