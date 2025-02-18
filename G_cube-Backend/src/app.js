@@ -13,12 +13,6 @@ const corsOption={
 }
 app.use(cors(corsOption));
 app.options('*',cors(corsOption));
-// app.use((req, res, next) => {
-//     if (req.headers["x-forwarded-proto"] !== "https") {
-//         return res.redirect(`https://${req.headers.host}${req.url}`);
-//     }
-//     next();
-// });
 
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true }));
