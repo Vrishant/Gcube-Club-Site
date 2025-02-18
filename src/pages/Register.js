@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import NavigationBar from '../components/navbar';
+import { ApiError } from '../utils/ApiError';
 
 const domainQuestions = {
   'Technology': { questions: ['What programming languages do you know?', 'Have you worked on any tech projects?'] },
@@ -19,11 +20,60 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   const handleDomainChange = (e) => {
     const selectedDomain = e.target.value;
     setDomain(selectedDomain);
     setQuestions(domainQuestions[selectedDomain]?.questions || []);
+  };
+ 
+  const handleUserRegistration = async (formData) => {
+    try {
+      const response = await fetch('https://gcube-club-site.onrender.com/api/v1/user/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      
+      const responseData = await response.json();
+      
+      if (!response.ok) {
+        throw new ApiError(response.status, responseData.message || 'Registration failed');
+      }
+      
+      // Store user ID in state
+      setUserId(responseData.data._id);
+      
+      return responseData;
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
+  };
+
+  const handleAnswerRegistration = async (answers) => {
+    try {
+      const response = await fetch('http://gcube-club-site.onrender.com/api/v1/answer/register', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'user-id': userId
+        },
+        body: JSON.stringify(answers),
+      });
+      
+      const responseData = await response.json();
+      
+      if (!response.ok) {
+        throw new ApiError(response.status, responseData.message || 'Answer registration failed');
+      }
+      
+      return responseData;
+    } catch (error) {
+      console.error('Answer registration error:', error);
+      throw error;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -31,23 +81,30 @@ const Register = () => {
     setIsSubmitting(true);
     
     const formData = {
-      name,
+      username: name,
       email,
-      contact,
+      contactNo: Number(contact),
       branch,
-      srn,
-      semester,
-      domain,
-      
+      srn: srn.toLowerCase().trim(),
+      semester: Number(semester),
+      domain
     };
 
-    const response = await fetch('https://gcube-club-site.onrender.com/api/v1/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-    
-    if (response.ok) {
+    try {
+      // Step 1: Register user
+      const userResponse = await handleUserRegistration(formData);
+      
+      // Step 2: Collect answers
+      const answers = questions.reduce((acc, question, index) => {
+        acc[`question${index + 1}`] = question;
+        acc[`answer${index + 1}`] = e.target.elements[`answer${index}`].value;
+        return acc;
+      }, {});
+
+      // Step 3: Register answers
+      await handleAnswerRegistration(answers);
+      
+      // Clear form and show success
       setName('');
       setEmail('');
       setContact('');
@@ -57,8 +114,11 @@ const Register = () => {
       setDomain('');
       setShowConfirmation(true);
       setTimeout(() => setShowConfirmation(false), 3000);
+    } catch (error) {
+      alert(error.message || 'An error occurred during registration');
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
@@ -121,7 +181,13 @@ const Register = () => {
                       {questions.map((question, index) => (
                         <div className="mb-3" key={index}>
                           <label className="form-label text-white">{question}</label>
-                          <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} required />
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            style={{ backgroundColor: '#333', color: '#fff' }} 
+                            name={`answer${index}`}
+                            required 
+                          />
                         </div>
                       ))}
                       <Button variant="outline-secondary" style={{ backgroundColor: 'rgb(123, 16, 68)', color: 'whitesmoke', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer', fontFamily: 'Oswald', fontSize: '1rem' }} className="icon2" type="submit" disabled={isSubmitting}>
