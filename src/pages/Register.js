@@ -332,7 +332,6 @@ const handleSubmit = async (e) => {
                             <option value="Hospitality">Hospitality</option>
                             <option value="Video Editing">Video Editing</option>
                             <option value="Operations">Operations</option>
-                            <option value="Campaigning">Campaigning</option>
                             <option value="Technical (Game Music)">Technical (Game Music)</option>
                             <option value="Technical (Narrative Design)">Technical (Narrative Design)</option>
                             <option value="Technical (Game Designer)">Technical (Game Designer)</option>
