@@ -36,6 +36,8 @@ const Register = () => {
       });
   
       const response = await fetch("https://gcube-club-site.onrender.com/api/v1/user/register", {
+      //const response = await fetch("http://localhost:4000/api/v1/user/register", {
+
         method: "POST",
         body: form,
       });
@@ -74,15 +76,16 @@ const Register = () => {
       //       method: "POST",
       //       body: form,
       //   });
+   // New implementation with userId in headers
 
-      // New implementation with userId in headers
-      const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register`, {
-            method: "POST",
-            headers: {
-                'user-id': userId
-            },
-            body: form,
-        });
+        const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register`, {
+      //const response = await fetch(`http://localhost:4000/api/v1/answer/register`, {
+        method: "POST",
+        headers: {
+            'user-id': userId
+        },
+        body: form
+      });
 
         const responseData = await response.json();
         console.log("Answer Registration Response:", responseData);
@@ -95,10 +98,6 @@ const Register = () => {
         throw error;
     }
 };
-
-
-  
-
 const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
@@ -133,7 +132,7 @@ const handleSubmit = async (e) => {
       }, {});
 
       // Step 3: Register Answers
-      console.log("Submitting Answers with User ID:", userId);
+      console.log("Submitting Answers with User ID:", userResponse.data._id);
       await handleAnswerRegistration(answers, userResponse.data._id);
       
       setShowConfirmation(true);
