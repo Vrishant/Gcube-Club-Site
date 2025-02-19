@@ -56,27 +56,6 @@ const Register = () => {
   
   
 
-  // const handleAnswerRegistration = async (answers) => {
-  //   try {
-  //     const form = new FormData();
-  //     Object.entries(answers).forEach(([key, value]) => {
-  //       form.append(key, value);
-  //     });
-  
-  //     const response = await fetch(`${API_BASE_URL}/answer/register?userId=${userId}`, {
-  //       method: 'POST',
-  //       body: form,
-  //     });
-  
-  //     const responseData = await response.json();
-  //     if (!response.ok) throw new Error(responseData.message || 'Answer registration failed');
-  
-  //     return responseData;
-  //   } catch (error) {
-  //     console.error('Answer registration error:', error);
-  //     throw error;
-  //   }
-  // };
   const handleAnswerRegistration = async (answers, userId) => {
     try {
         if (!userId) {
@@ -90,8 +69,18 @@ const Register = () => {
             form.append(key, value);
         });
 
-        const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register?userId=${userId}`, {
+      // Old implementation with userId as query parameter
+      // const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register?userId=${userId}`, {
+      //       method: "POST",
+      //       body: form,
+      //   });
+
+      // New implementation with userId in headers
+      const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register`, {
             method: "POST",
+            headers: {
+                'user-id': userId
+            },
             body: form,
         });
 
