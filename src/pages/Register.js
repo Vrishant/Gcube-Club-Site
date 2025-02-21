@@ -223,6 +223,7 @@ const handleSubmit = async (e) => {
       // Step 1: Register User
       const userResponse = await handleUserRegistration(formData);
       console.log("Registered User Response:", userResponse);
+      setShowConfirmation(true);
       
       // Store userId in state
       setUserId(userResponse.data._id);
@@ -242,7 +243,6 @@ const handleSubmit = async (e) => {
       console.log("Submitting Answers with User ID:", userResponse.data._id);
       await handleAnswerRegistration(answers, userResponse.data._id);
       
-      setShowConfirmation(true);
       setName('');
       setEmail('');
       setContact('');
@@ -331,7 +331,7 @@ const handleSubmit = async (e) => {
                             <option value="PR & Content">PR & Content</option>
                             <option value="Hospitality">Hospitality</option>
                             <option value="Video Editing">Video Editing</option>
-                            <option value="Operations">Operations</option>
+                            <option value="Operations">Operations</option> 
                             <option value="Technical (Game Music)">Technical (Game Music)</option>
                             <option value="Technical (Narrative Design)">Technical (Narrative Design)</option>
                             <option value="Technical (Game Designer)">Technical (Game Designer)</option>
