@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import NavigationBar from '../components/navbar';
 import backgroundImage from '../assets/3_back.jpeg';
 import axios from 'axios';
-
+import './register.css';
 
 const domainQuestions = {
   'Sponsorship': { 
@@ -232,7 +232,7 @@ const handleSubmit = async (e) => {
 
 
   return (
-    <div style={{ minHeight: '100vh', backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
+    <div style={{ minHeight: '100vh', backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }} >
       <div style={{ position: 'sticky', top: 0, zIndex: 100 }}>
         <NavigationBar username="JohnDoe" />
       </div>
@@ -266,12 +266,12 @@ const handleSubmit = async (e) => {
                   <>
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
-                        <label className="form-label text-white">Name:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={name} onChange={(e) => setName(e.target.value)} required />
+                        <label className="form-label text-white placeholder-white">Name:</label>
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={name} onChange={(e) => setName(e.target.value)} required placeholder='Enter full name'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Email:</label>
-                        <input type="email" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <input type="email" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder='Eg... john@gmail.com'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Contact:</label>
@@ -279,15 +279,15 @@ const handleSubmit = async (e) => {
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Branch:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={branch} onChange={(e) => setBranch(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={branch} onChange={(e) => setBranch(e.target.value)} required placeholder='Eg.. CSE'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">SRN:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={srn} onChange={(e) => setSrn(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={srn} onChange={(e) => setSrn(e.target.value)} required placeholder='Eg.. PES1UG23EC123'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Semester:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={semester} onChange={(e) => setSemester(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={semester} onChange={(e) => setSemester(e.target.value)} required placeholder='Eg.. 2, 4, 6'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Domain:</label>
