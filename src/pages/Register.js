@@ -275,7 +275,7 @@ const handleSubmit = async (e) => {
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Contact:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={contact} onChange={(e) => setContact(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={contact} onChange={(e) => setContact(e.target.value)} required placeholder='Enter only 10 digits'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Branch:</label>
