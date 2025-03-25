@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import NavigationBar from '../components/navbar';
 import backgroundImage from '../assets/3_back.jpeg';
+import axios from 'axios';
+import './register.css';
 
 const domainQuestions = {
   'Sponsorship': { 
@@ -136,75 +138,45 @@ const Register = () => {
   };
  
   const handleUserRegistration = async (formData) => {
+    console.log("Attempting User Registration with Data:", formData);
     try {
-      const form = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        form.append(key, value);
-      });
-  
-      const response = await fetch("https://gcube-club-site.onrender.com/api/v1/user/register", {
-      //const response = await fetch("http://localhost:4000/api/v1/user/register", {
+        const form = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+            form.append(key, value);
+        });
 
-        method: "POST",
-        body: form,
-      });
-  
-      const textResponse = await response.text(); // Get raw response before parsing
-      console.log("Raw response:", textResponse);
-  
-      if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
-  
-      const responseData = JSON.parse(textResponse); // Now try to parse JSON
-      setUserId(responseData.data._id);
-      return responseData;
+        const response = await axios.post("https://gcube-club-site.onrender.com/api/v1/user/register", form);
+
+        console.log("User Registration Response:", response.data);
+        setUserId(response.data.data._id);
+        return response.data;
     } catch (error) {
-      console.error("Registration error:", error);
-      throw error;
+        console.error("Registration error:", error.response?.data || error.message);
+        throw error;
     }
-  };
+};
   
   
 
   const handleAnswerRegistration = async (answers, userId) => {
     try {
-        if (!userId) {
-            throw new Error("User ID is missing. Answer registration failed.");
-        }
-
-        console.log("Submitting Answers with User ID:", userId); // Debugging log
-
-        const form = new FormData();
-        Object.entries(answers).forEach(([key, value]) => {
-            form.append(key, value);
-        });
-
-      // Old implementation with userId as query parameter
-      // const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register?userId=${userId}`, {
-      //       method: "POST",
-      //       body: form,
-      //   });
-   // New implementation with userId in headers
-
-        const response = await fetch(`https://gcube-club-site.onrender.com/api/v1/answer/register`, {
-      //const response = await fetch(`http://localhost:4000/api/v1/answer/register`, {
-        method: "POST",
-        headers: {
-            'user-id': userId
-        },
-        body: form
-      });
-
-        const responseData = await response.json();
-        console.log("Answer Registration Response:", responseData);
-
-        if (!response.ok) throw new Error(responseData.message || "Answer registration failed");
-
-        return responseData;
+      if (!userId) throw new Error("User ID is missing. Answer registration failed.");
+  
+      console.log("Submitting Answers with User ID:", userId);
+  
+      const response = await axios.post(
+        "https://gcube-club-site.onrender.com/api/v1/answer/register",
+        answers,
+        { headers: { 'user-id': userId, 'Content-Type': 'application/json' } }
+      );
+  
+      console.log("Answer Registration Response:", response.data);
+      return response.data;
     } catch (error) {
-        console.error("Answer registration error:", error);
-        throw error;
+      console.error("Answer registration error:", error.response?.data || error.message);
+      throw error;
     }
-};
+  };
 const handleSubmit = async (e) => {
   e.preventDefault();
   setIsSubmitting(true);
@@ -223,6 +195,7 @@ const handleSubmit = async (e) => {
       // Step 1: Register User
       const userResponse = await handleUserRegistration(formData);
       console.log("Registered User Response:", userResponse);
+      setShowConfirmation(true);
       
       // Store userId in state
       setUserId(userResponse.data._id);
@@ -242,7 +215,6 @@ const handleSubmit = async (e) => {
       console.log("Submitting Answers with User ID:", userResponse.data._id);
       await handleAnswerRegistration(answers, userResponse.data._id);
       
-      setShowConfirmation(true);
       setName('');
       setEmail('');
       setContact('');
@@ -260,7 +232,7 @@ const handleSubmit = async (e) => {
 
 
   return (
-    <div style={{ minHeight: '100vh', backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }}>
+    <div style={{ minHeight: '100vh', backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundAttachment: 'fixed' }} >
       <div style={{ position: 'sticky', top: 0, zIndex: 100 }}>
         <NavigationBar username="JohnDoe" />
       </div>
@@ -294,28 +266,28 @@ const handleSubmit = async (e) => {
                   <>
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
-                        <label className="form-label text-white">Name:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={name} onChange={(e) => setName(e.target.value)} required />
+                        <label className="form-label text-white placeholder-white">Name:</label>
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={name} onChange={(e) => setName(e.target.value)} required placeholder='Enter full name'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Email:</label>
-                        <input type="email" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <input type="email" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={email} onChange={(e) => setEmail(e.target.value)} required placeholder='Eg... john@gmail.com'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Contact:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={contact} onChange={(e) => setContact(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={contact} onChange={(e) => setContact(e.target.value)} required placeholder='Enter only 10 digits'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Branch:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={branch} onChange={(e) => setBranch(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={branch} onChange={(e) => setBranch(e.target.value)} required placeholder='Eg.. CSE'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">SRN:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={srn} onChange={(e) => setSrn(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={srn} onChange={(e) => setSrn(e.target.value)} required placeholder='Eg.. PES1UG23EC123'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Semester:</label>
-                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={semester} onChange={(e) => setSemester(e.target.value)} required />
+                        <input type="text" className="form-control" style={{ backgroundColor: '#333', color: '#fff' }} value={semester} onChange={(e) => setSemester(e.target.value)} required placeholder='Eg.. 2, 4, 6'/>
                       </div>
                       <div className="mb-3">
                         <label className="form-label text-white">Domain:</label>
@@ -331,7 +303,7 @@ const handleSubmit = async (e) => {
                             <option value="PR & Content">PR & Content</option>
                             <option value="Hospitality">Hospitality</option>
                             <option value="Video Editing">Video Editing</option>
-                            <option value="Operations">Operations</option>
+                            <option value="Operations">Operations</option> 
                             <option value="Technical (Game Music)">Technical (Game Music)</option>
                             <option value="Technical (Narrative Design)">Technical (Narrative Design)</option>
                             <option value="Technical (Game Designer)">Technical (Game Designer)</option>
@@ -367,7 +339,7 @@ const handleSubmit = async (e) => {
                           fontSize: '1rem',
                           boxShadow: '0 4px 10px rgba(255, 0, 0, 0.85)', // Neon Red shadow
                           transition: 'box-shadow 0.3s ease-in-out', padding: '10px 20px', borderRadius: '5px', border: 'none', cursor: 'pointer', fontFamily: 'Oswald', fontSize: '1rem' }} className="icon2" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Registering...' : 'Register'}
+                        {isSubmitting ? `Registering...(Don't  Reload)` : 'Register'}
                       </Button>
                     </form>
                   </>
