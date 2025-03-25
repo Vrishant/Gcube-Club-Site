@@ -195,7 +195,7 @@ const Home2 = () => {
                       </Card.Title>
                       <Card.Text>{card.content}</Card.Text>
                       <div className="d-flex justify-content-center">
-                        <a target='_blank' href='https://forms.gle/Q1dBQHHFpGUaku8K8'>
+                        <a target='_blank' href='/register'>
                         <Button
                           variant="outline-secondary"
                           style={{

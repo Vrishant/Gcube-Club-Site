@@ -39,11 +39,13 @@ const userSchema = new Schema({
         index:true
     },
     semester:{
-        type:Number,        
+        //type:Number,        
+        type:String,
         required:true,
     },
     contactNo:{
-        type:Number,
+        //type:Number,
+        type:String,
         required:true,
         unique:true
     },
