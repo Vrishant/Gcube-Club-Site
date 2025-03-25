@@ -17,10 +17,11 @@ const registerUser= asyncHandler(async(req,res)=>{
         throw new ApiError(401,"The user has already signed by the same email or SRN");
     }
     //only remove till here     */
+    /*
     const exsistingEntry= await User.countDocuments({srn:srn}); //this check is added to verify that same SRN has not applied for more than 2 domains.
     if(exsistingEntry>2){
         throw new ApiError(400,"No more than 2 entries allowed for the same SRN");
-    }
+    }*/
     const someUser= await User.create({
         username,
         srn,
