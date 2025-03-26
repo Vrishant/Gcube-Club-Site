@@ -12,13 +12,13 @@ const userSchema = new Schema({
         trim:true,
         required:true,
         index:true,
-        unique:true
+        // unique:true
     },
     srn:{
         type:String,
         index:true,
         required:true,
-        unique:true,
+        // unique:true,
         trim:true,
         lowercase:true
     },
