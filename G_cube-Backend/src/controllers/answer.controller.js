@@ -13,7 +13,7 @@ const registerAnswer=asyncHandler(async(req,res)=>{
     
     const {answer1, question1,answer2,question2,answer3,question3,answer4,question4} = trimmedBody;
     if(!answer1 || !question1) {
-        console.log('Missing fields:', {answer, question});
+        //console.log('Missing fields:', {answer, question});
         throw new ApiError(400, "Answer or question was not provided");
     }
     const userId=req.user?._id;

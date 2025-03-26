@@ -47,7 +47,7 @@ const userSchema = new Schema({
         //type:Number,
         type:String,
         required:true,
-        unique:true
+        //unique:true
     },
     domain:{
         type:String,
