@@ -52,6 +52,9 @@ const Footer = () => {
               <a href="https://discord.gg/NnPZZHcU" className="text-light me-3 icon" target='_blank'>
                 <Discord size={24} /> 
               </a>
+              <a href="https://www.linkedin.com/company/g-cube-pesu/posts/?feedView=all">
+                <Linkedin size={24}  className="text-light me-3 icon" target='_blank'/>
+              </a>
               {/* <a href="#" className="text-light me-3 icon">
                 <Linkedin size={24} /> 
               </a> */}
