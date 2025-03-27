@@ -12,22 +12,14 @@ const userSchema = new Schema({
         trim:true,
         required:true,
         index:true,
-        //unique:true
     },
     srn:{
         type:String,
         index:true,
         required:true,
-        //unique:true,
         trim:true,
         lowercase:true
     },
-    /*answer:[
-        {
-            type:Schema.Types.ObjectId,
-            ref:"Answer"
-        }
-    ],*/
     answer:{
         type:Schema.Types.ObjectId,
         ref:'Answer'
@@ -47,7 +39,6 @@ const userSchema = new Schema({
         //type:Number,
         type:String,
         required:true,
-        //unique:true
     },
     domain:{
         type:String,
